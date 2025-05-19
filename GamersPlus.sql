@@ -104,3 +104,36 @@ INSERT INTO DetalleIntercambio (ID_INT, ID_US, ID_VID) VALUES
 INSERT INTO DetalleIntercambio (ID_INT, ID_US, ID_VID) VALUES
 (2, 3, 3),
 (2, 1, 4);
+
+-- Consulta de todos los Usuarios registrados
+
+SELECT * FROM Usuarios;
+
+-- Consulta de todos los videojuegos con sus respectivos dueños
+
+SELECT V.ID_VID, V.Titulo, U.Nom_US AS Propietario
+FROM Videojuegos V
+JOIN Usuarios U ON V.ID_US = U.ID_US;
+
+-- Consulta de la lista de deseados de todos los usuarios
+
+SELECT U.Nom_US, V.Titulo AS Videojuego_Deseado
+FROM ListaDeseados L
+JOIN Usuarios U ON L.ID_US = U.ID_US
+JOIN Videojuegos V ON L.ID_VID = V.ID_VID;
+
+-- Consulta de los intercambios con estado y fecha
+
+SELECT I.ID_INT, U1.Nom_US AS Iniciador, U2.Nom_US AS Destinatario,
+       I.Fecha_Inicio, I.Fecha_Resolucion, I.Estado, I.Es_Contrapropuesta
+FROM Intercambios I
+JOIN Usuarios U1 ON I.ID_US_INICIADOR = U1.ID_US
+JOIN Usuarios U2 ON I.ID_US_DESTINATARIO = U2.ID_US;
+
+-- Consulta de los detalles de los intercambios realizados por los usuarios
+
+SELECT D.ID_INT, U.Nom_US AS Usuario, V.Titulo AS Videojuego
+FROM DetalleIntercambio D
+JOIN Usuarios U ON D.ID_US = U.ID_US
+JOIN Videojuegos V ON D.ID_VID = V.ID_VID
+ORDER BY D.ID_INT;
